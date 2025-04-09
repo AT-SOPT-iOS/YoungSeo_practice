@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
     }
 
     private let titleLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 75, y: 163, width: 250, height: 44))
+        let label = UILabel(frame: CGRect(x: 68, y: 163, width: 250, height: 44))
         label.text = "동네라서 가능한 모든것\n당근에서 가까운 이웃과 함께해요."
         label.textColor = UIColor(named: "Black")
         label.textAlignment = .center
