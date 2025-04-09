@@ -10,11 +10,28 @@ class LoginViewController: UIViewController {
     }
 
     private func pushToWelcomeVC() {
+
+        guard let idText = idTextField.text, !idText.isEmpty else {
+            showAlert(message: "아이디를 입력해주세요.")
+            return
+        }
+        guard let passwordText = passwordTextField.text, !passwordText.isEmpty else {
+            showAlert(message: "비밀번호를 입력해주세요.")
+            return
+        }
+        
         let welcomeViewController = WelcomeViewController()
-        welcomeViewController.id = idTextField.text
+        welcomeViewController.id = idText
         self.navigationController?.pushViewController(welcomeViewController, animated: true)
     }
     
+    // 텍스트필드 미입력시, 경고문 보여주는 함수
+    private func showAlert(message: String) {
+        let alertController = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     private let titleLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 75, y: 163, width: 250, height: 44))
         label.text = "동네라서 가능한 모든것\n당근에서 가까운 이웃과 함께해요."
@@ -63,7 +80,7 @@ class LoginViewController: UIViewController {
         return button
     }()
     
-        override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = .white
