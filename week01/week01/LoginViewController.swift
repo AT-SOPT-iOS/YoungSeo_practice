@@ -1,37 +1,7 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-    
-    private func presentToWelcomeVC() {
-        let welcomeViewController = WelcomeViewController()
-        welcomeViewController.modalPresentationStyle = .formSheet
-        welcomeViewController.id = idTextField.text
-        self.present(welcomeViewController, animated: true)
-    }
-
-    private func pushToWelcomeVC() {
-
-        guard let idText = idTextField.text, !idText.isEmpty else {
-            showAlert(message: "아이디를 입력해주세요.")
-            return
-        }
-        guard let passwordText = passwordTextField.text, !passwordText.isEmpty else {
-            showAlert(message: "비밀번호를 입력해주세요.")
-            return
-        }
         
-        let welcomeViewController = WelcomeViewController()
-        welcomeViewController.id = idText
-        self.navigationController?.pushViewController(welcomeViewController, animated: true)
-    }
-    
-    // 텍스트필드 미입력시, 경고문 보여주는 함수
-    private func showAlert(message: String) {
-        let alertController = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
-    }
-
     private let titleLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 68, y: 163, width: 250, height: 44))
         label.text = "동네라서 가능한 모든것\n당근에서 가까운 이웃과 함께해요."
@@ -63,11 +33,6 @@ class LoginViewController: UIViewController {
         textField.leftViewMode = .always
         return textField
     }()
-
-    @objc
-    private func loginButtonDidTap() {
-        pushToWelcomeVC()
-    }
     
     private lazy var loginButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 20, y: 422, width: 335, height: 57))
@@ -79,17 +44,51 @@ class LoginViewController: UIViewController {
         button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         return button
     }()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = .white
         setLayout()
     }
+        
+    @objc
+    private func loginButtonDidTap() {
+        pushToWelcomeVC()
+    }
+    
     
     private func setLayout() {
         [titleLabel, idTextField, passwordTextField, loginButton].forEach {
             self.view.addSubview($0)
         }
+    }
+    
+    private func presentToWelcomeVC() {
+        let welcomeViewController = WelcomeViewController()
+        welcomeViewController.modalPresentationStyle = .formSheet
+        welcomeViewController.id = idTextField.text
+        self.present(welcomeViewController, animated: true)
+    }
+
+    private func pushToWelcomeVC() {
+        guard let idText = idTextField.text, !idText.isEmpty else {
+            showAlert(message: "아이디를 입력해주세요.")
+            return
+        }
+        guard let passwordText = passwordTextField.text, !passwordText.isEmpty else {
+            showAlert(message: "비밀번호를 입력해주세요.")
+            return
+        }
+        
+        let welcomeViewController = WelcomeViewController()
+        welcomeViewController.id = idText
+        self.navigationController?.pushViewController(welcomeViewController, animated: true)
+    }
+    
+    private func showAlert(message: String) {
+        let alertController = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
 }
